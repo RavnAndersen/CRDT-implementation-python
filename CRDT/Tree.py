@@ -47,6 +47,19 @@ class Tree:
         self.clock += 1
         new_timeStamp = (self.clock, self.deviceID)
         self.do_operation(new_timeStamp, previousParent, newParent, node, True)
+
+    def display_tree(self,current_node:Node, layer:int) -> None:
+        for child in current_node.children.values():
+            print ("-"*layer , child.name)
+            self.display_tree(child, layer=layer+1)
+
+    def add_tree_to_list(self,current_node: Node) -> list:
+        current_list = []
+        for child in current_node.children.values():
+            current_list.append(child.name)
+            current_list.append(self.add_tree_to_list(child))
+        return current_list
+    
     # Wrapper functions ------------------------------------------------------
 
     # The base function for every operation done to the Tree

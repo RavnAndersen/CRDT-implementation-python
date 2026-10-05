@@ -77,7 +77,7 @@ def run_cli() -> None:
             # Generate a random ID to prevent collisions across different terminals
             new_id = random.randint(10000, 999999)
             # Create a new Node passing id, parent, and name[cite: 1]
-            new_node = Node(id=new_id, parent=current_node, name=name)
+            new_node = Node(id=new_id, parent=None, name=name)
             # Add the new node to the tree via wrapper function[cite: 4]
             crdt_tree.add_node(new_node, current_node)
             print(f"Created '{name}'.")

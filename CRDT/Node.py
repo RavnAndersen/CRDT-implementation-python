@@ -10,10 +10,8 @@ class Node:
             self.children = {}
         self.name = name
     
-    # Node newNode
     def add_child_node(self, newNode: Node) -> None:
          self.children[newNode.id] = newNode
 
-    # Node node
     def remove_child_node(self, node: Node) -> None:
         self.children.pop(node.id)

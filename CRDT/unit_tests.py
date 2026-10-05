@@ -131,5 +131,3 @@ def test_1(): # Add a node on 1 device, and a node on another and sync
     run_cli(1, "sync")
     run_cli(2, "sync")
     print (run_cli(1, "ls"))
-
-test_1()
