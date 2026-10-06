@@ -33,7 +33,7 @@ class Tree:
 
     def remove_node_promotional(self, node:Node) -> None:
         if node.parent is not None: # root node doesnt have a parent
-            for child in node.children.values():
+            for child in list(node.children.values()):
                 self.add_node(child,node.parent) # add the children to the children of the parent
                 child.parent = node.parent
             # remove the node from the parents list of children
@@ -48,7 +48,7 @@ class Tree:
         new_timeStamp = (self.clock, self.deviceID)
         self.do_operation(new_timeStamp, previousParent, newParent, node, True)
 
-    def display_tree(self,current_node:Node, layer:int) -> None:
+    def display_tree(self,current_node:Node, layer:int = 0) -> None:
         for child in current_node.children.values():
             print ("-"*layer , child.name)
             self.display_tree(child, layer=layer+1)
@@ -69,7 +69,7 @@ class Tree:
         log_entry = {
             "log_time": new_timeStamp,
             "old_parent": previousParent.id if previousParent else None,
-            "new_parent": newParent.id,
+            "new_parent": newParent.id if newParent else None,
             "log_child": node.id,
             "node_name": node.name
         }
@@ -96,7 +96,8 @@ class Tree:
                 node.parent.remove_child_node(node)
             
             # Apply to the new parent 
-            newParent.add_child_node(node)
+            if newParent is not None:
+                newParent.add_child_node(node)
             node.parent = newParent
 
     # the function that adds a log to the file
