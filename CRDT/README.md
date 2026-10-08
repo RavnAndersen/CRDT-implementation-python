@@ -11,7 +11,7 @@ A Python implementation of a conflict-free replicated data type (CRDT) for tree 
 
 This project implements a replicated tree data structure that automatically resolves concurrent modifications (such as moving, creating, or deleting nodes across multiple devices).
 
-- **Convergence Verified:** Unit tests confirm state convergence—when multiple devices interact with the tree and synchronize, all instances converge to the identical state.
+- **Convergence Verified:** Unit tests confirm state convergence - when multiple devices interact with the tree and synchronize, all instances converge to the identical state.
 - **Test Coverage:** `Unit_tests.py` achieves 92% coverage of `Tree.py`.
 - **Limitations:** This is an accurate functional implementation aimed at local simulation and demonstration. It is not optimized for large-scale production use. State synchronization currently uses a local JSON file, though the architecture can be adapted to sync via a remote server or database.
 
