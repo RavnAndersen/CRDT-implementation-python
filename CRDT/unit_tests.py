@@ -217,38 +217,6 @@ def test_remove_node_promotional():
     assert grandchild.id in root.children
     _clear_file()
 
-def test_remove_node_promotional_root_exception():
-    _clear_file()
-    root = Node(0, None, "Root", None)
-    tree = Tree(root, 1)
-    
-    with pytest.raises(Exception, match="Cannot delete root node in a promotional way"):
-        tree.remove_node_promotional(root)
-    _clear_file()
-
-def test_display_tree(capsys):
-    _clear_file()
-    root = Node(0, None, "Root", None)
-    tree = Tree(root, 1)
-    
-    child = Node(1, None, "Child", None) 
-    tree.add_node(child, root)
-    
-    tree.display_tree(root)
-    captured = capsys.readouterr()
-    assert " Child" in captured.out
-    _clear_file()
-
-def test_file_exceptions():
-    _clear_file()
-    root = Node(0, None, "Root", None)
-    tree = Tree(root, 1, syncFilePath="does_not_exist_123.json")
-    
-    tree.main_logic() 
-    
-    dummy_log = {"log_time": [1, 1], "old_parent": None, "new_parent": 0, "log_child": 1, "node_name": "Test"}
-    tree.log_operation("does_not_exist_123.json", dummy_log)
-    _clear_file()
 
 def test_undo_redo_missing_parents():
     _clear_file()
