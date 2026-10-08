@@ -1,0 +1,15 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Coverage and test artifacts
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+
+# Environment / local settings
+.env
+venv/
+env/

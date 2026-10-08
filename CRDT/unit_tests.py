@@ -1,7 +1,6 @@
 from Node import Node
 from Tree import Tree
 import random
-import pytest
 import json
 
 def _clear_file():
@@ -216,7 +215,6 @@ def test_remove_node_promotional():
     assert grandchild.parent == root
     assert grandchild.id in root.children
     _clear_file()
-
 
 def test_undo_redo_missing_parents():
     _clear_file()
