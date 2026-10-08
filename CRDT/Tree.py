@@ -62,9 +62,17 @@ class Tree:
     
     # Wrapper functions ------------------------------------------------------
 
-    # The base function for every operation done to the Tree
     def do_operation(self, new_timeStamp:tuple[int,int], previousParent:Node | None, newParent:Node | None, node:Node, localFlag:bool) -> None:
+        """The base function for every operation done to the Tree, 
+           it is responsible for moving, adding, removing etc depending on the parameters.
 
+           - new_timeStamp: the time stamp of this operation we are doing.
+           - previousParent: the parent of the node before we apply the operation.
+           - newParent: the paret of the node after we apply the operation.
+           - node: the actual node we are doing the operation on.
+           - localFlag: tells us whether this is a new operation coming from our device, 
+             or if we are just applying an operation found in the log file.
+        """
         # create the log entry
         log_entry = {
             "log_time": new_timeStamp,
@@ -100,8 +108,12 @@ class Tree:
                 newParent.add_child_node(node)
             node.parent = newParent
 
-    # the function that adds a log to the file
     def log_operation(self, filePath:str, log_entry:dict[str, Any]) -> None:
+        """Adds a log to the log file, currently set to the local json file
+           
+           - filePath: the path to the file you are writing the log to
+           - log_entry: the log entry that you are appending to the file
+        """
         try:
             # load the sync file
             with open(filePath,"r") as fRead:
@@ -115,8 +127,12 @@ class Tree:
         with open(filePath, 'w') as fWrite:
                 json.dump(listObj, fWrite, indent=4, separators=(',',': '))
             
-    # undoes operations which are newer than one that you just found, and then redoes them in the right order
     def undo_redo(self, syncedOperation:dict[str, Any]) -> None:
+        """When an operation is found that is older then operations we have already done, we undo those operations until we get to the new 
+           one that we found, we then redo the operations in the correct order
+           
+           - syncedOpeation: the operation which is out of place
+        """
         # Makes sure it doesnt crash before loading operations into the program
         if syncedOperation["log_child"] not in self.treeData:
             self.treeData[syncedOperation["log_child"]] = Node(syncedOperation["log_child"], None, syncedOperation["node_name"], None)
@@ -174,11 +190,12 @@ class Tree:
             localFlag = False
 
             self.do_operation(new_timeStamp, previousParent, newParent, node, localFlag)
-        
 
-    # undoes an operation passed into it
     def _undo(self, operation:dict[str, Any]) -> None:
-
+        """Helper function for undo_redo, this just undoes any operation passed into it
+        
+           - operation: the operation you want to undo
+        """
         if operation["new_parent"] is not None:
             newParent:Node = self.treeData[operation["new_parent"]]
         else:
@@ -198,6 +215,7 @@ class Tree:
             node.parent = previousParent
         
     def main_logic(self) -> None:
+        """This collects the operations from the json file, and then runs the required functions to apply each one"""
         try:
             with open(self.syncFilePath, "r") as f:
                 allOperations = json.load(f)
